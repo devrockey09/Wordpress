@@ -1,0 +1,44 @@
+// Set Website Logo for Admin Login Page
+function bluebot_wplogo() {
+    // Get the custom logo URL
+    $custom_logo_id = get_theme_mod('custom_logo');
+    $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+ 
+    if ($logo) {
+        echo '<style type="text/css">
+            h1 a {
+                background-image: url(' . esc_url($logo[0]) . ') !important;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+               width: 100% !important;
+  height: 88px !important;
+  display: block !important;
+  background-color: #fff;
+  padding: 11px 0 !important;
+  background-size: 100% 77px !important;
+  background-position: center center !important;
+            }
+        </style>';
+    }
+}
+add_action('login_head', 'bluebot_wplogo');
+
+// Active Class
+add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
+function special_nav_class($classes, $item){
+     if( in_array('current-menu-item', $classes) ){
+             $classes[] = 'active ';
+     }
+     return $classes;
+}
+
+add_filter('body_class', function ($classes) {
+    // Add post/page slug if not present
+    if (is_single() || is_page() && !is_front_page()) {
+        if (!in_array($slug = basename(get_permalink()), $classes)) {
+            $classes[] = "page-{$slug}";
+        }
+    }
+
+    return $classes;
+});
