@@ -1,0 +1,37 @@
+<style>
+html{overflow-x: hidden;}
+body.menu-open {
+    overflow: hidden;
+}
+body:not(.elementor-editor-active) .elementor-menu-anchor:before {
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -100px 0 0;
+    pointer-events: none;
+}
+
+.cmn-btn .elementor-button {background-color: transparent !important;background-image: linear-gradient(90deg, #00BFE9, #6D1BC7, #6D1BC7, #00BFE9);
+    background-size: 300%;
+    background-position: left;position:relative;overflow:hidden;display: inline-block;vertical-align: top;transition:all 600ms ease-in-out;}
+.cmn-btn .elementor-button:hover,
+.cmn-btn .elementor-button:focus-visible{
+	background-position: right;
+	box-shadow:
+      0 -3px 28px 0px rgba(22, 193, 232, 0.35),
+      0 6px 36px 0px rgba(123, 47, 247, 0.25);
+    transform: translateY(-2px);
+}
+.cmn-btn .elementor-button:active{box-shadow:
+      0 -3px 28px 0px rgba(22, 193, 232, 0.35),
+      0 6px 36px 0px rgba(123, 47, 247, 0.25);
+    transform: translateY(0);}
+
+.cmn-btn .elementor-button .elementor-button-text{position:relative;padding-right:15px;}
+.cmn-btn .elementor-button .elementor-button-text:before{content: ""; position: absolute; width: 15px; height: 1px; background: #ffffff59; top: -1px; bottom: 0px; right: -5px; margin: auto 0;/*transition: left .7s cubic-bezier(0.22,1,0.36,1);*/transition:all 600ms ease-in-out; }
+.cmn-btn .elementor-button:before{content: "";position: absolute;top: 0;left: -60%;width: 40%;height: 100%;background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);transform: skewX(-20deg);transition: left .7s cubic-bezier(0.22,1,0.36,1);}
+.cmn-btn .elementor-button:hover .elementor-button-text:before{right:-10px;}
+.cmn-btn .elementor-button:hover:before{left: 120%;}
+
+
+</style>
