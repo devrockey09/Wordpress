@@ -1,0 +1,228 @@
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /*
+     * Run only when viewport width is 768px or larger
+     */
+    if (window.innerWidth < 768) {
+        return;
+    }
+
+    const effects = [
+        {
+            target: ".home-banner",
+            trigger: ".service-section"
+        },
+        {
+            target: ".our-process",
+            trigger: ".our-projects"
+        },
+        {
+            target: ".inner-banner",
+            trigger: ".inner-page-content"
+        }
+    ];
+
+    const MAX_BLUR = 15;
+    const MAX_TINT = 0.25;
+    const BLUR_START = 200;
+
+    let BLUR_DISTANCE = window.innerHeight * 0.8;
+
+    function updateEffects() {
+
+        // Stop effect if viewport becomes smaller than 768px
+        if (window.innerWidth < 768) {
+            return;
+        }
+
+        effects.forEach(function (effect) {
+
+            const targets = document.querySelectorAll(effect.target);
+            const triggers = document.querySelectorAll(effect.trigger);
+
+            if (!targets.length || !triggers.length) {
+                return;
+            }
+
+            const trigger = triggers[0];
+            const triggerRect = trigger.getBoundingClientRect();
+
+            const distance = window.innerHeight - triggerRect.top;
+
+            let progress =
+                (distance - BLUR_START) / BLUR_DISTANCE;
+
+            progress = Math.max(0, Math.min(1, progress));
+
+            const blur = progress * MAX_BLUR;
+            const tint = progress * MAX_TINT;
+
+            targets.forEach(function (target) {
+
+                target.style.setProperty(
+                    "--banner-blur",
+                    `${blur}px`
+                );
+
+                target.style.setProperty(
+                    "--banner-tint",
+                    tint
+                );
+
+            });
+
+        });
+    }
+
+    let ticking = false;
+
+    function onScroll() {
+
+        // Don't process scroll on mobile
+        if (window.innerWidth < 768) {
+            return;
+        }
+
+        if (!ticking) {
+
+            window.requestAnimationFrame(function () {
+
+                updateEffects();
+
+                ticking = false;
+
+            });
+
+            ticking = true;
+        }
+    }
+
+    window.addEventListener("scroll", onScroll, {
+        passive: true
+    });
+
+    updateEffects();
+
+    window.addEventListener("resize", function () {
+
+        // If resized to mobile, remove the effect
+        if (window.innerWidth < 768) {
+
+            effects.forEach(function (effect) {
+
+                document
+                    .querySelectorAll(effect.target)
+                    .forEach(function (target) {
+
+                        target.style.removeProperty("--banner-blur");
+                        target.style.removeProperty("--banner-tint");
+
+                    });
+
+            });
+
+            return;
+        }
+
+        BLUR_DISTANCE = window.innerHeight * 0.8;
+
+        updateEffects();
+
+    });
+
+});
+</script>
+
+<style>
+
+
+/* =========================================
+   STICKY HOME BANNER
+========================================= */
+
+.home-banner , .our-process , .inner-banner{
+ 
+    /*
+     * CSS variable controlled by JavaScript.
+     * 0 = no blur
+     * 1 = maximum blur
+     */
+    --banner-blur: 0px;
+    --banner-tint: 0;
+    filter: blur(var(--banner-blur));
+
+    /*
+     * Prevent the blur from affecting the
+     * layout dimensions.
+     */
+    will-change: filter;
+
+    /*
+     * Makes the blur transition smooth.
+     */
+    transition: filter 0.08s linear;
+}
+
+
+.home-banner::after , .our-process::after ,..inner-banner:after{
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: #50ACF8;
+
+    opacity: var(--banner-tint);
+
+    pointer-events: none;
+
+    z-index: 999;
+}
+
+/* =========================================
+   SERVICE SECTION
+========================================= */
+
+.service-section , .our-projects ,.inner-page-content{
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+
+
+/* =========================================
+   OPTIONAL: CONTENT INSIDE SERVICE
+========================================= */
+
+.service-section > .e-con-inner,
+.service-section > .elementor-container {
+    position: relative;
+    z-index: 3;
+}
+.our-projects > .e-con-inner,
+.our-projects > .elementor-container {
+    position: relative;
+    z-index: 3;
+}
+
+.inner-page-content > .e-con-inner,
+.inner-page-content > .elementor-container {
+    position: relative;
+    z-index: 3;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 767px) {
+
+    .home-banner , .our-process{
+        min-height: auto;
+        height: auto;
+        position: static;
+    }
+
+}
+
+</style>
