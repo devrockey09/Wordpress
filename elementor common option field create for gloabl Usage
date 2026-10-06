@@ -1,1 +1,60 @@
 elementor function.php code use for create global get option short code  like phone , email , address , etc 
+// register phone , email , address
+
+add_filter('admin_init', 'my_general_settings_register_addressfields');
+add_filter('admin_init', 'my_general_settings_register_phonefields');
+add_filter('admin_init', 'my_general_settings_register_mailfields');
+
+function my_general_settings_register_addressfields()
+{
+    register_setting('general', 'address', 'esc_attr');
+    add_settings_field('address', '<label for="address">'.__('Address' , 'address' ).'</label>' , 'my_general_settings_fields_addresshtml', 'general');
+}
+
+function my_general_settings_register_phonefields()
+{
+    register_setting('general', 'phone_number', 'esc_attr');
+    add_settings_field('phone_number', '<label for="phone_number">'.__('Phone Number' , 'phone_number' ).'</label>' , 'my_general_settings_fields_phonehtml', 'general');
+}
+
+function my_general_settings_register_mailfields()
+{
+    register_setting('general', 'email_link', 'esc_attr');
+    add_settings_field('email_link', '<label for="email_link">'.__('Email Link' , 'email_link' ).'</label>' , 'my_general_settings_fields_mailhtml', 'general');
+}
+
+
+function my_general_settings_fields_addresshtml()
+{
+    $value = get_option( 'address', '' );
+    echo '<textarea id="address" name="address">'.$value.'</textarea>';
+}
+
+function my_general_settings_fields_phonehtml()
+{
+    $value = get_option( 'phone_number', '' );
+    echo '<input type="text" id="phone_number" name="phone_number" value="' . $value . '" />';
+}
+
+function my_general_settings_fields_mailhtml()
+{
+    $value = get_option( 'email_link', '' );
+    echo '<input type="text" id="email_link" name="email_link" value="' . $value . '" />';
+}
+
+// create short code
+
+function my_phone_number_shortcode() {
+    return esc_html( get_option( 'phone_number', '' ) );
+}
+add_shortcode( 'phone_number', 'my_phone_number_shortcode' );
+
+function my_address_shortcode() {
+    return esc_html( get_option( 'address', '' ) );
+}
+add_shortcode( 'address', 'my_address_shortcode' );
+
+function my_email_shortcode() {
+    return esc_html( get_option( 'email_link', '' ) );
+}
+add_shortcode( 'email_link', 'my_email_shortcode' );
