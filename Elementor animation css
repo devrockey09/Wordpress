@@ -1,1 +1,51 @@
 elementor motion animation css 
+<style>
+	@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-20px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+	
+	@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translate3d(20px, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+	
+	@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+	
+	@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -40px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+	
+</style>
