@@ -1,0 +1,26 @@
+.wpr-nav-menu .wpr-menu-item span::before,
+.wpr-nav-menu .wpr-menu-item span::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+  transition:transform 0.6s cubic-bezier(0.65,0,0.35,1);
+}
+selector .wpr-nav-menu .wpr-menu-item span::before{
+  top:0;
+  color:#fff;
+}
+
+selector .wpr-nav-menu .wpr-menu-item span::after{
+  top:100%;
+  color:#D9B877;
+}
+selector .wpr-nav-menu .menu-item:hover .wpr-menu-item span::before,
+selector .wpr-nav-menu .menu-item:hover .wpr-menu-item span::after{
+  transform:translateY(-100%);
+}
+
+selector .wpr-nav-menu .menu-item.current-menu-item .wpr-menu-item span::before,
+selector .wpr-nav-menu .menu-item.current-menu-item .wpr-menu-item span::after{
+  transform:translateY(-100%);
+}
